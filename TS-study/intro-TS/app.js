@@ -1,17 +1,16 @@
-function add(n1, n2, showRes, phrase) {
-    //if(typeof n1 !== 'number' || typeof n2 !== 'number'){
-    //   throw new Error('Incorrect input');
-    // }
-    var res = n1 + n2;
-    if (showRes) {
-        console.log(phrase + res);
-    }
-    else {
-        return res;
-    }
+// const person: {
+//   name: string;
+//   age: number;
+// } = {
+var person = {
+    name: "Minimillion",
+    age: 28,
+    hobbies: ["Cooking", "Exercise"]
+};
+var fovoriteActivities;
+fovoriteActivities = ["Exercise"];
+console.log(person.name);
+for (var _i = 0, _a = person.hobbies; _i < _a.length; _i++) {
+    var hobby = _a[_i];
+    console.log(hobby.toUpperCase());
 }
-var number1 = 5;
-var number2 = 2.8;
-var printRes = true;
-var phraseRes = "Result is: ";
-add(number1, number2, printRes, phraseRes);
