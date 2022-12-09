@@ -1,20 +1,30 @@
-// const person: {
-//   name: string;
-//   age: number;
-// } = {
-const person = {
-  name: "Minimillion",
-  age: 28,
-  hobbies: ["Cooking", "Exercise"],
-};
-
-let fovoriteActivities: string[];
-
-fovoriteActivities = ["Exercise"];
-
-console.log(person.name);
-
-for (const hobby of person.hobbies) {
-  console.log(hobby.toUpperCase());
-  //   console.log(hobby.map()); !! ERROR !!
+function combine(
+  input1: number | string,
+  input2: number | string,
+  resConversion: "as-number" | "as-text"
+) {
+  let res;
+  if (
+    (typeof input1 === "number" && typeof input2 === "number") ||
+    resConversion === "as-number"
+  ) {
+    res = +input1 + +input2;
+  } else {
+    res = input1.toString() + input2.toString();
+  }
+  //   if (resConversion === "as-number") {
+  //     return +res;
+  //   } else {
+  //     return res.toString();
+  //   }
+  return res;
 }
+
+const combinedAges = combine(30, 26, "as-number");
+console.log(combinedAges);
+
+const combineStringAges = combine("30", "26", "as-number");
+console.log(combineStringAges);
+
+const combinedNames = combine("Max", "Anna", "as-text");
+console.log(combinedNames);
