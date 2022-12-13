@@ -1,13 +1,13 @@
 let userInput: unknown;
-let userName: string;
+let strName: string;
 
 userInput = 5;
-userName = "Max";
+strName = "Max";
 
 // userName = userInput // unknown =! string
 
 if (typeof userInput === "string") {
-  userName = userInput;
+  strName = userInput;
 }
 
 function generateError(message: string, code: number): never {

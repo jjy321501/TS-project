@@ -1,11 +1,11 @@
 "use strict";
 let userInput;
-let userName;
+let strName;
 userInput = 5;
-userName = "Max";
+strName = "Max";
 // userName = userInput // unknown =! string
 if (typeof userInput === "string") {
-    userName = userInput;
+    strName = userInput;
 }
 function generateError(message, code) {
     throw { message: message, errorCode: code };
