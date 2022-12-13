@@ -1,17 +1,20 @@
 class Department {
-  public name: string;
+  // private id: string;
+  // private name: string;
   private employees: string[] = [];
 
-  constructor(n: string) {
-    this.name = n;
+  constructor(private readonly id: string, public name: string) {
+    //   this.id = id;
+    //   this.name = n;
   }
 
   describe(this: Department) {
-    console.log("Department: " + this.name);
+    console.log(`Department (${this.id}): ${this.name}`);
   }
 
   addEmployee(employee: string) {
     this.employees.push(employee);
+    // this.id = "d2";// read only!
   }
 
   printEmployeeInformation() {
@@ -20,17 +23,47 @@ class Department {
   }
 }
 
-const accounting = new Department("Accounting");
+class ITDepartment extends Department {
+  admins: string[];
+  constructor(id: string, admins: string[]) {
+    super(id, "IT");
+    this.admins = admins;
+  }
+}
 
-accounting.addEmployee("jun");
-accounting.addEmployee("young");
+class AccountingDepartment extends Department {
+  constructor(id: string, private reports: string[]) {
+    super(id, "Accounting");
+  }
 
-// accounting.employees[2] = "anna"; // ! private 속성이므로 클래스 외부 접근 X
+  addReport(text: string) {
+    this.reports.push(text);
+  }
 
-accounting.describe();
-accounting.name = "NEW NAME";
-accounting.printEmployeeInformation();
+  printReports() {
+    console.log(this.reports);
+  }
+}
 
-// const accountingCopy = { name: "s", describe: accounting.describe };
+const it = new ITDepartment("d1", ["jun"]);
+
+it.addEmployee("jun");
+it.addEmployee("young");
+
+// it.employees[2] = "anna"; // ! private 속성이므로 클래스 외부 접근 X
+
+it.describe();
+it.name = "NEW NAME";
+it.printEmployeeInformation();
+
+console.log(it);
+
+const accounting = new AccountingDepartment("d2", []);
+
+accounting.addReport("something went wrong");
+
+accounting.printReports();
+
+// const accountingCopy = { name: "s", describe: it.describe };
 
 // accountingCopy.describe();
