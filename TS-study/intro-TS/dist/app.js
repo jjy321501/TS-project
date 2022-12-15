@@ -8,6 +8,10 @@ class Department {
         this.employees = [];
         //   this.id = id;
         //   this.name = n;
+        // console.log(Department.fisicalYear); // this.fisicalYear 은 static 요소라서 인스턴스 유효 x
+    }
+    static createEmployee(name) {
+        return { name: name };
     }
     describe() {
         console.log(`Department (${this.id}): ${this.name}`);
@@ -21,6 +25,7 @@ class Department {
         console.log(this.employees);
     }
 }
+Department.fisicalYear = 2022;
 class ITDepartment extends Department {
     constructor(id, admins) {
         super(id, "IT");
@@ -28,9 +33,22 @@ class ITDepartment extends Department {
     }
 }
 class AccountingDepartment extends Department {
+    get mostRecentReport() {
+        if (this.lastReport) {
+            return this.lastReport;
+        }
+        throw new Error("No report found");
+    }
+    set mostRecentReport(value) {
+        if (!value) {
+            throw new Error("Please pass in a valid value");
+        }
+        this.addReport(value);
+    }
     constructor(id, reports) {
         super(id, "Accounting");
         this.reports = reports;
+        this.lastReport = reports[0];
     }
     addEmployee(name) {
         if (name === "jun") {
@@ -40,11 +58,14 @@ class AccountingDepartment extends Department {
     }
     addReport(text) {
         this.reports.push(text);
+        this.lastReport = text;
     }
     printReports() {
         console.log(this.reports);
     }
 }
+const employee1 = Department.createEmployee("jun");
+console.log(employee1, Department.fisicalYear);
 const it = new ITDepartment("d1", ["jun"]);
 it.addEmployee("jun");
 it.addEmployee("young");
@@ -54,7 +75,9 @@ it.name = "NEW NAME";
 it.printEmployeeInformation();
 console.log(it);
 const accounting = new AccountingDepartment("d2", []);
+accounting.mostRecentReport = "Year End Report";
 accounting.addReport("something went wrong");
+console.log(accounting.mostRecentReport);
 accounting.addEmployee("jun");
 accounting.addEmployee("young");
 accounting.printReports();
