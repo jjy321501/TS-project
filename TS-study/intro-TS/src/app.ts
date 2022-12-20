@@ -1,40 +1,36 @@
-// type AddFn = (a: number, b: number) => number;
-interface AddFn {
-  (a: number, b: number): number;
-}
+// interface Admin {
+//   name: string;
+//   privileges: string[];
+// }
 
-let addFn: AddFn;
+// interface Employee {
+//   name: string;
+//   startDate: Date;
+// }
 
-addFn = (n1: number, n2: number) => {
-  return n1 + n2;
+// interface ElevatedEmployee extends Admin, Employee {}
+
+// 위의 인터페이스로 구현한 방식과 동일하게 작동하지만
+// 인터섹션 타입
+type Admin = {
+  name: string;
+  privileges: string[];
 };
 
-interface Named {
-  readonly name: string;
-}
-
-// type Person {
-interface Greetable extends Named {
-  greet(phrase: string): void;
-}
-
-class Person implements Greetable, Named {
+type Employee = {
   name: string;
-  age = 28;
+  startDate: Date;
+};
 
-  constructor(n: string) {
-    this.name = n;
-  }
-  greet(phrase: string) {
-    console.log(phrase + " " + this.name);
-  }
-}
+type ElevatedEmployee = Admin & Employee;
 
-let user1: Greetable;
-// let user1: Person; // Person 클래스가 Greetable 인터페이스를 구현했기때문에 설정 가능한 타입
+const e1: ElevatedEmployee = {
+  name: "jun",
+  privileges: ["create-server"],
+  startDate: new Date(),
+};
 
-user1 = new Person("jun");
-// user1.name = "young"; // !! readonly
+type Combine = string | number;
+type Numberic = number | boolean;
 
-user1.greet("hi there - I am");
-console.log(user1);
+type Universal = Combine | Numberic;
