@@ -62,10 +62,11 @@ const fetchedUserData = {
 
 console.log(fetchedUserData?.job?.title);
 
-const emptyInput = null;
-// const emptyInput = '';  // '' 그냥 빈 문자열을 넣고싶을때 null,undefined 와 다른 처리가 필요하다.
+// const emptyInput = null;
+const emptyInput = ""; // '' 그냥 빈 문자열을 넣고싶을때 null,undefined 와 다른 처리가 필요하다.
 
-const storedData = emptyInput || "DEFAULT"; //
+const storedData = emptyInput || "DEFAULT"; // => DEFAULT
+// const storedData = emptyInput ?? "DEFAULT"; // => ''
 
 console.log(storedData);
 

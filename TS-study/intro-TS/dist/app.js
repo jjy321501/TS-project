@@ -28,9 +28,10 @@ const fetchedUserData = {
     },
 };
 console.log((_a = fetchedUserData === null || fetchedUserData === void 0 ? void 0 : fetchedUserData.job) === null || _a === void 0 ? void 0 : _a.title);
-const emptyInput = null;
-// const emptyInput = '';  // '' 그냥 빈 문자열을 넣고싶을때 null,undefined 와 다른 처리가 필요하다.
-const storedData = emptyInput || "DEFAULT"; //
+// const emptyInput = null;
+const emptyInput = ""; // '' 그냥 빈 문자열을 넣고싶을때 null,undefined 와 다른 처리가 필요하다.
+const storedData = emptyInput || "DEFAULT"; // => DEFAULT
+// const storedData = emptyInput ?? "DEFAULT"; // => ''
 console.log(storedData);
 function printEmployeeInformation(emp) {
     console.log("Name: " + emp.name); // 두 속성 name 속성이 있어서 정상 작동
