@@ -10,6 +10,7 @@
 // promise.then((data) => {
 // //   data.split(" ");
 // });
+// 제너릭 함수 예제
 function merge(objA, objB) {
     return Object.assign(objA, objB);
 }
@@ -34,3 +35,36 @@ function extractAndConvert(obj, key) {
     return "Value: " + obj[key];
 }
 console.log(extractAndConvert({ name: "jun" }, "name"));
+class DataStorage {
+    constructor() {
+        this.data = [];
+    }
+    addItem(item) {
+        this.data.push(item);
+    }
+    removeItem(item) {
+        if (this.data.indexOf(item) === -1) {
+            return;
+        }
+        this.data.splice(this.data.indexOf(item), 1); // -1
+    }
+    getItems() {
+        return [...this.data];
+    }
+}
+const textStorage = new DataStorage();
+textStorage.addItem("jun");
+textStorage.addItem("young");
+textStorage.removeItem("jun");
+console.log(textStorage.getItems());
+const numberStorage = new DataStorage();
+function createCourseGoal(title, desc, date) {
+    let courseGoal = {}; // Partial<> 타입은 빈 객체를 할당 할 수 있다.
+    courseGoal.title = title;
+    courseGoal.description = desc;
+    courseGoal.completeUntil = date;
+    return courseGoal; // Partial<> 타입을 반환할 수 없으므로 타입 캐스팅한다.
+}
+const names = ["jun", "young"]; // Readonly<> 타입으로 배열 뿐 아니라 객체도 지정가능하다.
+// names.push("jung");
+// names.pop();

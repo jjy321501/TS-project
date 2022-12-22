@@ -12,6 +12,7 @@
 // //   data.split(" ");
 // });
 
+// 제너릭 함수 예제
 function merge<T extends {}, U extends object>(objA: T, objB: U) {
   return Object.assign(objA, objB);
 }
@@ -46,3 +47,57 @@ function extractAndConvert<T extends object, U extends keyof T>(
   return "Value: " + obj[key];
 }
 console.log(extractAndConvert({ name: "jun" }, "name"));
+
+class DataStorage<T extends string | number | boolean> {
+  private data: T[] = [];
+
+  addItem(item: T) {
+    this.data.push(item);
+  }
+
+  removeItem(item: T) {
+    if (this.data.indexOf(item) === -1) {
+      return;
+    }
+    this.data.splice(this.data.indexOf(item), 1); // -1
+  }
+
+  getItems() {
+    return [...this.data];
+  }
+}
+
+const textStorage = new DataStorage<string>();
+
+textStorage.addItem("jun");
+textStorage.addItem("young");
+textStorage.removeItem("jun");
+console.log(textStorage.getItems());
+
+const numberStorage = new DataStorage<number>();
+
+// !! 검색로직을 미세조정하기 위해 원시값이 아닌 객체하고만 작동하는것이 좋다.
+// const objStorage = new DataStorage<object>();
+// const junObj = { name: "jun" };
+// objStorage.addItem(junObj);
+// objStorage.addItem({ name: "young" });
+// objStorage.removeItem(junObj);
+// console.log(objStorage.getItems());
+
+interface CourseGoal {
+  title: string;
+  description: string;
+  completeUntil: Date;
+}
+
+function createCourseGoal(title: string, desc: string, date: Date): CourseGoal {
+  let courseGoal: Partial<CourseGoal> = {}; // Partial<> 타입은 빈 객체를 할당 할 수 있다.
+  courseGoal.title = title;
+  courseGoal.description = desc;
+  courseGoal.completeUntil = date;
+  return courseGoal as CourseGoal; // Partial<> 타입을 반환할 수 없으므로 타입 캐스팅한다.
+}
+
+const names: Readonly<string[]> = ["jun", "young"]; // Readonly<> 타입으로 배열 뿐 아니라 객체도 지정가능하다.
+// names.push("jung");
+// names.pop();
