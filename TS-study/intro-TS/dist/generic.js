@@ -65,6 +65,6 @@ function createCourseGoal(title, desc, date) {
     courseGoal.completeUntil = date;
     return courseGoal; // Partial<> 타입을 반환할 수 없으므로 타입 캐스팅한다.
 }
-const names = ["jun", "young"]; // Readonly<> 타입으로 배열 뿐 아니라 객체도 지정가능하다.
+const names = ["jun", "young"]; // Readonly<> 타입으로 배열 뿐 아니라 다른 타입도 지정가능하다.
 // names.push("jung");
 // names.pop();
