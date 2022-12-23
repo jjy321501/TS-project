@@ -31,9 +31,9 @@ const e1: ElevatedEmployee = {
 };
 
 type Combine = string | number;
-type Numberic = number | boolean;
+type Numeric = number | boolean;
 
-type Universal = Combine & Numberic; // number type
+type Universal = Combine & Numeric; // number type
 
 function addCombine(a: number, b: number): number;
 function addCombine(a: string, b: string): string;
