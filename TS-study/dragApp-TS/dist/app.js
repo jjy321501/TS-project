@@ -5,6 +5,36 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+function validate(validatableInput) {
+    let isValid = true;
+    // required validate
+    if (validatableInput.required) {
+        isValid = isValid && validatableInput.value.toString().trim().length !== 0;
+    }
+    // minLength validate
+    if (validatableInput.minLength != null &&
+        typeof validatableInput.value === "string") {
+        isValid =
+            isValid && validatableInput.value.length >= validatableInput.minLength;
+    }
+    // maxLength validate
+    if (validatableInput.maxLength != null &&
+        typeof validatableInput.value === "string") {
+        isValid =
+            isValid && validatableInput.value.length <= validatableInput.maxLength;
+    }
+    //
+    if (validatableInput.min != null &&
+        typeof validatableInput.value === "number") {
+        isValid = isValid && validatableInput.value >= validatableInput.min;
+    }
+    //
+    if (validatableInput.max != null &&
+        typeof validatableInput.value === "number") {
+        isValid = isValid && validatableInput.value <= validatableInput.max;
+    }
+    return isValid;
+}
 // autobind decorator
 function autobind(target, methodName, descriptor) {
     const originalMethod = descriptor.value;
@@ -16,6 +46,28 @@ function autobind(target, methodName, descriptor) {
         },
     };
     return adjDescriptor;
+}
+// ProjectList Class
+class ProjectList {
+    constructor(type) {
+        this.type = type;
+        this.templateElement = document.getElementById("project-list");
+        this.hostElement = document.getElementById("app");
+        const importedNode = document.importNode(this.templateElement.content, true);
+        this.element = importedNode.firstElementChild;
+        this.element.id = `${this.type}-projects`;
+        this.attach();
+        this.renderContent();
+    }
+    renderContent() {
+        const listId = `${this.type}-project-list`;
+        this.element.querySelector("ul").id = listId;
+        this.element.querySelector("h2").textContent =
+            this.type.toUpperCase() + " PROJECTS";
+    }
+    attach() {
+        this.hostElement.insertAdjacentElement("beforeend", this.element);
+    }
 }
 // ProjectInput Class
 class ProjectInput {
@@ -35,9 +87,23 @@ class ProjectInput {
         const enteredTitle = this.titleInputElement.value;
         const enteredDesc = this.descInputElement.value;
         const enteredPeople = this.peopleInputElement.value;
-        if (enteredTitle.trim().length === 0 ||
-            enteredDesc.trim().length === 0 ||
-            enteredPeople.trim().length === 0) {
+        const titleValidatable = {
+            value: enteredTitle,
+            required: true,
+        };
+        const descValidatable = {
+            value: enteredDesc,
+            minLength: 5,
+        };
+        const peopleValidatable = {
+            value: enteredPeople,
+            required: true,
+            min: 1,
+            max: 5,
+        };
+        if (!validate(titleValidatable) ||
+            !validate(descValidatable) ||
+            !validate(peopleValidatable)) {
             alert("Invalid input, please try again!");
             return;
         }
@@ -45,12 +111,18 @@ class ProjectInput {
             return [enteredTitle, enteredDesc, +enteredPeople];
         }
     }
+    clearInput() {
+        this.titleInputElement.value = "";
+        this.descInputElement.value = "";
+        this.peopleInputElement.value = "";
+    }
     submitHandler(event) {
         event.preventDefault();
         const userInput = this.gatherInput();
         if (Array.isArray(userInput)) {
             const [title, desc, people] = userInput;
             console.log(title, desc, people);
+            this.clearInput();
         }
     }
     configure() {
@@ -64,3 +136,5 @@ __decorate([
     autobind
 ], ProjectInput.prototype, "submitHandler", null);
 const prjInput = new ProjectInput();
+const activePrjList = new ProjectList("active");
+const finishedPrjList = new ProjectList("finished");
