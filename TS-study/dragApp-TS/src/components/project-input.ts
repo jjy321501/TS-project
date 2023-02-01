@@ -1,10 +1,10 @@
-import { Component } from "./base.js";
-import { Validatable, validate } from "../util/validation.js";
-import { autobind } from "../decorators/autobind.js";
+import Cmp from "./base.js";
+import * as Validation from "../util/validation.js";
+import { autobind as Autobind } from "../decorators/autobind.js";
 import { projectState } from "../state/project-state.js";
 
 // ProjectInput Class
-export class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
+export class ProjectInput extends Cmp<HTMLDivElement, HTMLFormElement> {
   titleInputElement: HTMLInputElement;
   descInputElement: HTMLInputElement;
   peopleInputElement: HTMLInputElement;
@@ -36,25 +36,25 @@ export class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
     const enteredDesc = this.descInputElement.value;
     const enteredPeople = this.peopleInputElement.value;
 
-    const titleValidatable: Validatable = {
+    const titleValidatable: Validation.Validatable = {
       value: enteredTitle,
       required: true,
     };
-    const descValidatable: Validatable = {
+    const descValidatable: Validation.Validatable = {
       value: enteredDesc,
       required: true,
       minLength: 5,
     };
-    const peopleValidatable: Validatable = {
+    const peopleValidatable: Validation.Validatable = {
       value: +enteredPeople,
       required: true,
       min: 1,
       max: 5,
     };
     if (
-      !validate(titleValidatable) ||
-      !validate(descValidatable) ||
-      !validate(peopleValidatable)
+      !Validation.validate(titleValidatable) ||
+      !Validation.validate(descValidatable) ||
+      !Validation.validate(peopleValidatable)
     ) {
       alert("Invalid input, please try again!");
       return;
@@ -68,7 +68,7 @@ export class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
     this.peopleInputElement.value = "";
   }
 
-  @autobind
+  @Autobind
   private submitHandler(event: Event) {
     event.preventDefault();
     const userInput = this.gatherInput();
