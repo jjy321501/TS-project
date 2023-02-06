@@ -39,4 +39,5 @@ export class ProjectState extends State {
         }
     }
 }
+console.log("Running...");
 export const projectState = ProjectState.getInstance();
