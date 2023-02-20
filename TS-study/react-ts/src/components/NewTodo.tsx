@@ -1,11 +1,15 @@
 import { text } from "node:stream/consumers";
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
+
+import "./NewTodo.css";
 
 type NewTodoProps = {
   onAddTodo: (todoText: string) => void;
 };
 
 const NewTodo: React.FC<NewTodoProps> = (props) => {
+  useEffect();
+
   const textInputRef = useRef<HTMLInputElement>(null);
 
   const todoSubmitHandler = (event: React.FormEvent) => {
