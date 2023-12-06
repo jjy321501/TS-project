@@ -7,112 +7,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var App;
 (function (App) {
-    let ProjectStatus;
-    (function (ProjectStatus) {
-        ProjectStatus[ProjectStatus["Active"] = 0] = "Active";
-        ProjectStatus[ProjectStatus["Finished"] = 1] = "Finished";
-    })(ProjectStatus = App.ProjectStatus || (App.ProjectStatus = {}));
-    class Project {
-        constructor(id, title, desc, people, status) {
-            this.id = id;
-            this.title = title;
-            this.desc = desc;
-            this.people = people;
-            this.status = status;
-        }
-    }
-    App.Project = Project;
-})(App || (App = {}));
-var App;
-(function (App) {
-    class State {
-        constructor() {
-            this.listeners = [];
-        }
-        addListener(listenerFn) {
-            this.listeners.push(listenerFn);
-        }
-    }
-    class ProjectState extends State {
-        constructor() {
-            super();
-            this.projects = [];
-        }
-        static getInstance() {
-            if (this.instance) {
-                return this.instance;
-            }
-            this.instance = new ProjectState();
-            return this.instance;
-        }
-        addProject(title, desc, numOfPeople) {
-            const newPrj = new App.Project(Math.random().toString(), title, desc, numOfPeople, App.ProjectStatus.Active);
-            this.projects.push(newPrj);
-            this.updateListeners();
-        }
-        moveProject(prjId, newStatus) {
-            const project = this.projects.find((prj) => prj.id === prjId);
-            if (project && project.status !== newStatus) {
-                project.status = newStatus;
-                this.updateListeners();
-            }
-        }
-        updateListeners() {
-            for (const listenerFn of this.listeners) {
-                listenerFn(this.projects.slice());
-            }
-        }
-    }
-    App.ProjectState = ProjectState;
-    App.prjState = ProjectState.getInstance();
-})(App || (App = {}));
-var App;
-(function (App) {
-    function validate(validatableInput) {
-        let isValid = true;
-        if (validatableInput.required) {
-            isValid =
-                isValid && validatableInput.value.toString().trim().length !== 0;
-        }
-        if (validatableInput.minLength != null &&
-            typeof validatableInput.value === "string") {
-            isValid =
-                isValid && validatableInput.value.length >= validatableInput.minLength;
-        }
-        if (validatableInput.maxLength != null &&
-            typeof validatableInput.value === "string") {
-            isValid =
-                isValid && validatableInput.value.length <= validatableInput.maxLength;
-        }
-        if (validatableInput.min != null &&
-            typeof validatableInput.value === "number") {
-            isValid = isValid && validatableInput.value >= validatableInput.min;
-        }
-        if (validatableInput.max != null &&
-            typeof validatableInput.value === "number") {
-            isValid = isValid && validatableInput.value <= validatableInput.max;
-        }
-        return isValid;
-    }
-    App.validate = validate;
-})(App || (App = {}));
-var App;
-(function (App) {
-    function autobind(_, _2, descriptor) {
-        const originalMethod = descriptor.value;
-        const adjDescriptor = {
-            configurable: true,
-            get() {
-                const boundFn = originalMethod.bind(this);
-                return boundFn;
-            },
-        };
-        return adjDescriptor;
-    }
-    App.autobind = autobind;
-})(App || (App = {}));
-var App;
-(function (App) {
     class Component {
         constructor(templateId, hostId, insertAtStart, newElId) {
             this.templateEl = document.getElementById(templateId);
@@ -200,6 +94,94 @@ var App;
 })(App || (App = {}));
 var App;
 (function (App) {
+    function autobind(_, _2, descriptor) {
+        const originalMethod = descriptor.value;
+        const adjDescriptor = {
+            configurable: true,
+            get() {
+                const boundFn = originalMethod.bind(this);
+                return boundFn;
+            },
+        };
+        return adjDescriptor;
+    }
+    App.autobind = autobind;
+})(App || (App = {}));
+var App;
+(function (App) {
+    function validate(validatableInput) {
+        let isValid = true;
+        if (validatableInput.required) {
+            isValid =
+                isValid && validatableInput.value.toString().trim().length !== 0;
+        }
+        if (validatableInput.minLength != null &&
+            typeof validatableInput.value === "string") {
+            isValid =
+                isValid && validatableInput.value.length >= validatableInput.minLength;
+        }
+        if (validatableInput.maxLength != null &&
+            typeof validatableInput.value === "string") {
+            isValid =
+                isValid && validatableInput.value.length <= validatableInput.maxLength;
+        }
+        if (validatableInput.min != null &&
+            typeof validatableInput.value === "number") {
+            isValid = isValid && validatableInput.value >= validatableInput.min;
+        }
+        if (validatableInput.max != null &&
+            typeof validatableInput.value === "number") {
+            isValid = isValid && validatableInput.value <= validatableInput.max;
+        }
+        return isValid;
+    }
+    App.validate = validate;
+})(App || (App = {}));
+var App;
+(function (App) {
+    class State {
+        constructor() {
+            this.listeners = [];
+        }
+        addListener(listenerFn) {
+            this.listeners.push(listenerFn);
+        }
+    }
+    class ProjectState extends State {
+        constructor() {
+            super();
+            this.projects = [];
+        }
+        static getInstance() {
+            if (this.instance) {
+                return this.instance;
+            }
+            this.instance = new ProjectState();
+            return this.instance;
+        }
+        addProject(title, desc, numOfPeople) {
+            const newPrj = new App.Project(Math.random().toString(), title, desc, numOfPeople, App.ProjectStatus.Active);
+            this.projects.push(newPrj);
+            this.updateListeners();
+        }
+        moveProject(prjId, newStatus) {
+            const project = this.projects.find((prj) => prj.id === prjId);
+            if (project && project.status !== newStatus) {
+                project.status = newStatus;
+                this.updateListeners();
+            }
+        }
+        updateListeners() {
+            for (const listenerFn of this.listeners) {
+                listenerFn(this.projects.slice());
+            }
+        }
+    }
+    App.ProjectState = ProjectState;
+    App.prjState = ProjectState.getInstance();
+})(App || (App = {}));
+var App;
+(function (App) {
     class ProjectInput extends App.Component {
         constructor() {
             super("project-input", "app", true, "user-input");
@@ -269,6 +251,24 @@ var App;
     const prjInput = new App.ProjectInput();
     const activePrjList = new App.ProjectList("active");
     const finishedPrjList = new App.ProjectList("finished");
+})(App || (App = {}));
+var App;
+(function (App) {
+    let ProjectStatus;
+    (function (ProjectStatus) {
+        ProjectStatus[ProjectStatus["Active"] = 0] = "Active";
+        ProjectStatus[ProjectStatus["Finished"] = 1] = "Finished";
+    })(ProjectStatus = App.ProjectStatus || (App.ProjectStatus = {}));
+    class Project {
+        constructor(id, title, desc, people, status) {
+            this.id = id;
+            this.title = title;
+            this.desc = desc;
+            this.people = people;
+            this.status = status;
+        }
+    }
+    App.Project = Project;
 })(App || (App = {}));
 var App;
 (function (App) {
