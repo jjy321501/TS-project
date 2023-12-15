@@ -1,4 +1,4 @@
-import { Project, ProjectStatus } from "../models/project.js";
+import { Project, ProjectStatus } from "../models/project";
 // state 관리하는 상태 클래스 (다양한 상태를 관리하기 위해 제네릭 타입) / ex) 프로젝트, 장바구니 등
 class State {
     constructor() {

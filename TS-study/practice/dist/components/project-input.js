@@ -4,12 +4,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-import { Component } from "./base-component.js";
-import { validate } from "../util/validation.js";
-import { autobind } from "../decorators/autobind.js";
-import { prjState } from "../state/project-state.js";
+import Cmp from "./base-component";
+import * as Validation from "../util/validation";
+import { autobind as Autobind } from "../decorators/autobind";
+import { prjState } from "../state/project-state";
 // 입력폼 양식 클래스
-export class ProjectInput extends Component {
+export class ProjectInput extends Cmp {
     constructor() {
         super("project-input", "app", true, "user-input");
         this.titleInputEl = this.element.querySelector("#title");
@@ -42,9 +42,9 @@ export class ProjectInput extends Component {
         //   enteredTitle.trim().length === 0 ||
         //   enteredDesc.trim().length === 0 ||
         //   enteredPeople.trim().length === 0
-        !validate(titleValidatable) ||
-            !validate(descValidatable) ||
-            !validate(peopleValidatable)) {
+        !Validation.validate(titleValidatable) ||
+            !Validation.validate(descValidatable) ||
+            !Validation.validate(peopleValidatable)) {
             alert("Invalid Input, try again!");
             // Tuple 타입을 반환하지 못할경우 void 타입을 리턴
             return;
@@ -83,6 +83,6 @@ export class ProjectInput extends Component {
     }
 }
 __decorate([
-    autobind
+    Autobind
 ], ProjectInput.prototype, "submitHandler", null);
 //# sourceMappingURL=project-input.js.map

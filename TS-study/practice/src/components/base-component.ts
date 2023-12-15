@@ -1,5 +1,10 @@
+export const something = "...";
+
 //Component Base Class(공통적으로 쓰이는 프로퍼티, 메소드)
-export abstract class Component<T extends HTMLElement, U extends HTMLElement> {
+export default abstract class Component<
+  T extends HTMLElement,
+  U extends HTMLElement
+> {
   templateEl: HTMLTemplateElement;
   hostEl: T;
   element: U;

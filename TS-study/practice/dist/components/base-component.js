@@ -1,5 +1,6 @@
+export const something = "...";
 //Component Base Class(공통적으로 쓰이는 프로퍼티, 메소드)
-export class Component {
+export default class Component {
     constructor(templateId, hostId, insertAtStart, newElId) {
         this.templateEl = document.getElementById(templateId);
         this.hostEl = document.getElementById(hostId);

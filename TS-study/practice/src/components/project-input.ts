@@ -1,10 +1,10 @@
-import { Component } from "./base-component.js";
-import { Validatable, validate } from "../util/validation.js";
-import { autobind } from "../decorators/autobind.js";
-import { prjState } from "../state/project-state.js";
+import Cmp from "./base-component";
+import * as Validation from "../util/validation";
+import { autobind as Autobind } from "../decorators/autobind";
+import { prjState } from "../state/project-state";
 
 // 입력폼 양식 클래스
-export class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
+export class ProjectInput extends Cmp<HTMLDivElement, HTMLFormElement> {
   titleInputEl: HTMLInputElement;
   descInputEl: HTMLInputElement;
   peopleInputEl: HTMLInputElement;
@@ -32,16 +32,16 @@ export class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
     const enteredDesc = this.descInputEl.value;
     const enteredPeople = this.peopleInputEl.value;
 
-    const titleValidatable: Validatable = {
+    const titleValidatable: Validation.Validatable = {
       value: enteredTitle,
       required: true,
     };
-    const descValidatable: Validatable = {
+    const descValidatable: Validation.Validatable = {
       value: enteredDesc,
       required: true,
       minLength: 5,
     };
-    const peopleValidatable: Validatable = {
+    const peopleValidatable: Validation.Validatable = {
       value: +enteredPeople,
       required: true,
       min: 1,
@@ -52,9 +52,9 @@ export class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
       //   enteredTitle.trim().length === 0 ||
       //   enteredDesc.trim().length === 0 ||
       //   enteredPeople.trim().length === 0
-      !validate(titleValidatable) ||
-      !validate(descValidatable) ||
-      !validate(peopleValidatable)
+      !Validation.validate(titleValidatable) ||
+      !Validation.validate(descValidatable) ||
+      !Validation.validate(peopleValidatable)
     ) {
       alert("Invalid Input, try again!");
       // Tuple 타입을 반환하지 못할경우 void 타입을 리턴
@@ -72,7 +72,7 @@ export class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
   }
 
   // submit 시에 발동할 메소드
-  @autobind
+  @Autobind
   private submitHandler(e: Event) {
     e.preventDefault();
     const userInput = this.gatherUserInput();

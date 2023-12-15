@@ -1,4 +1,4 @@
-import { Project, ProjectStatus } from "../models/project.js";
+import { Project, ProjectStatus } from "../models/project";
 
 // 리스너 타입 (리스너 함수의 리턴값을 상관 안함)
 type Listener<T> = (items: T[]) => void;
